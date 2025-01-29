@@ -1,0 +1,1 @@
+## Wordpress Plugin Certicate Generato
