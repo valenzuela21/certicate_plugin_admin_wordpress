@@ -1,0 +1,293 @@
+
+.lds-ripple,
+.lds-ripple div {
+    box-sizing: border-box;
+}
+.lds-ripple {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+.lds-ripple div {
+    position: absolute;
+    border: 4px solid currentColor;
+    opacity: 1;
+    border-radius: 50%;
+    color:#1169a4;
+    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.lds-ripple div:nth-child(2) {
+    animation-delay: -0.5s;
+}
+@keyframes lds-ripple {
+    0% {
+        top: 36px;
+        left: 36px;
+        width: 8px;
+        height: 8px;
+        opacity: 0;
+    }
+    4.9% {
+        top: 36px;
+        left: 36px;
+        width: 8px;
+        height: 8px;
+        opacity: 0;
+    }
+    5% {
+        top: 36px;
+        left: 36px;
+        width: 8px;
+        height: 8px;
+        opacity: 1;
+    }
+    100% {
+        top: 0;
+        left: 0;
+        width: 80px;
+        height: 80px;
+        opacity: 0;
+    }
+}
+
+
+
+.solder-form-search-section{
+    position: relative;
+}
+
+.solder-form-search-section .container-search {
+    border: 1px solid #dfdfdf;
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    width: 650px;
+    margin: auto;
+    -webkit-box-shadow: 1px 1px 20px 3px rgba(240,240,240,1);
+    -moz-box-shadow: 1px 1px 20px 3px rgba(240,240,240,1);
+    box-shadow: 1px 1px 20px 3px rgba(240,240,240,1);
+}
+
+.solder-form-search-section .container-solder {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.solder-form-search-section .col-solder-1 {
+    width: 300px;
+}
+
+.solder-form-search-section .col-solder-2 {
+    width: 280px;
+}
+
+.solder-form-search-section .column .input-solder {
+    all: unset;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
+    border: 1px solid #dfdfdf;
+    border-radius: 8px;
+    padding: 3px 10px!important;
+}
+
+.solder-form-search-section .column .input-solder::placeholder {
+    color: #555555;
+    font-size: 18px;
+}
+
+.solder-form-search-section .column .input-solder:focus,
+.solder-form-search-section .column .input-solder:active {
+    border: 2.2px solid #415bbc;
+}
+
+.solder-form-search-section .column .button-search {
+    position: relative;
+    width: 58px;
+    height: 58px;
+    background: #1c3aaf;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid #1c3aaf;
+    margin: 0px;
+    padding: 0px;
+}
+
+.solder-form-search-section .column .button-search:hover {
+    background: #1a43df;
+}
+
+.solder-form-search-section .column .button-search-mobile{
+    display: none;
+}
+
+.solder-form-search-section .column .icon-search {
+    width: 50px;
+    height: 50px;
+    top: 6px;
+    left: 2px;
+    position: relative;
+}
+
+.solder-form-search-section .container-result{
+    position: absolute;
+    z-index: 33;
+    background: #fff;
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #dfdfdf;
+    width: 650px;
+    height: fit-content;
+    border-radius: 8px;
+    top: 80px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    -webkit-box-shadow: 1px 1px 20px 3px rgba(240,240,240,1);
+    -moz-box-shadow: 1px 1px 20px 3px rgba(240,240,240,1);
+    box-shadow: 1px 1px 20px 3px rgba(240,240,240,1);
+}
+
+.solder-form-search-section .container-result .container-table{
+    max-height: 280px;
+    overflow: auto;
+}
+
+.solder-form-search-section .container-result .title{
+    font-size: 18px;
+    text-align: center;
+    margin: 2px;
+    font-weight: 700;
+}
+
+.solder-form-search-section .label{
+    width: 98%;
+}
+
+.solder-form-search-section .container-result .sub-title{
+    font-size: 16px;
+    text-align: center;
+    margin: 3px 0 10px 0;
+    font-weight: 500;
+}
+
+.solder-form-search-section .btn-certificate{
+    background: #1c3aaf;
+    border: 1px solid #1c3aaf;
+    border-radius: 4px;
+    position: relative;
+}
+
+.solder-form-search-section .btn-certificate:hover{
+    cursor: pointer;
+    background: #1a43df;
+}
+
+.solder-form-search-section .btn-certificate .icon-certificate{
+    width: 44px;
+    height: 44px;
+    padding: 5px 2px;
+    color: #fff;
+    top: 6px;
+    position: relative;
+}
+
+.solder-form-search-section .footer{
+    display: flex;
+    margin: 14px auto;
+}
+
+.solder-form-search-section .footer .btn-downloader{
+    background: #1c3aaf;
+    border: 1px solid #1c3aaf;
+    padding: 10px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px !important;
+}
+
+.solder-form-search-section .footer .btn-downloader:hover{
+    cursor: pointer;
+    background: #1a43df;
+}
+
+.solder-form-search-section .footer .column-4{
+    width: 500px;
+}
+
+.solder-form-search-section .table {
+    font-family: arial, sans-serif;
+    font-size: 14px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.solder-form-search-section td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.solder-form-search-section tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+@media screen and (max-width: 700px) {
+    .solder-form-search-section .container-solder {
+        display: block;
+        gap: 0;
+    }
+
+    .solder-form-search-section .col-solder-1,
+    .solder-form-search-section .col-solder-2{
+        width: 100%;
+        margin: 10px auto;
+    }
+
+    .solder-form-search-section .container-search{
+        width: auto;
+    }
+
+    .solder-form-search-section .container-result{
+        position: relative;
+        margin: 0 auto;
+        top: 10px;
+        width: auto;
+    }
+
+    .solder-form-search-section .column .input-solder {
+        width: 95.5%;
+    }
+
+    .solder-form-search-section .footer .column-4{
+        width: 66%;
+    }
+
+    .solder-form-search-section .column .button-search {
+        display: none;
+
+    }
+
+    .solder-form-search-section .column .button-search-mobile{
+        display: block;
+        background: #1c3aaf;
+        border: 1px solid #1c3aaf;
+        border-radius: 4px;
+        width: 100%;
+        padding: 12px 10px;
+        color: #dfdfdf;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .solder-form-search-section .column .button-search-mobile:hover{
+        background: #1a43df;
+        cursor: pointer;
+    }
+
+}
+
