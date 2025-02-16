@@ -73,7 +73,7 @@ class SoldadorAdmin {
                 if (
                     !isset($form_data['name'], $form_data['document'], $form_data['course'],
                         $form_data['level_course'], $form_data['hours'], $form_data['date']) ||
-                    in_array('N/A', $form_data, true) // Verifica si algún campo tiene "N/A"
+                    in_array('N/A', $form_data, true)
                 )  {
                     continue;
                 }
