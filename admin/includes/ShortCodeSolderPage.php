@@ -22,17 +22,14 @@ class ShortCodeSolderPage {
         $output = ModalAdminContent::previewCertificate().'
         <div class="solder-form-search-section">
   <div class="container-search">
-    <form autocomplete="off">
+    <form id="mySearchSolder" autocomplete="off">
       <div class="container-solder">
         <div class="column col-solder-1">
-          <label for="firstName">
             <input class="input-solder" name="firstName" id="firstName" placeholder="'.__('Ingresa el nombre', 'soldador-admin').'"/>
-          </label>
         </div>
+        <div class="p-2"> O </div>
         <div class="column col-solder-2">
-          <label for="identify">
             <input class="input-solder" name="identify" id="identify" placeholder="'.__('Ingresa la cédula', 'soldador-admin').'"/>
-          </label>
         </div>
         <div class="column">
           <button  type="button" class="consult-cert button-search">
@@ -67,7 +64,7 @@ class ShortCodeSolderPage {
     <div class="footer">
         <div class="column column-4"></div>
         <div class="column">
-          <button id="downloader" class="btn-downloader">'.__('Descargar Resultado', 'soldador-admin').'</button>
+          <button id="downloader" class="btn-downloader">'.__('Limpiar Resultados', 'soldador-admin').'</button>
         </div>
     </div>
   </div>

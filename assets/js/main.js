@@ -1,4 +1,4 @@
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
     $('#modal-preview-certificate').hide()
     $('#popup-modal-create').hide();
 
@@ -43,19 +43,19 @@ jQuery(document).ready(function($) {
             firstName: {
                 required: true
             },
-            titleCourse:{
+            titleCourse: {
                 required: true
             },
-            identify:{
+            identify: {
                 required: true
             },
-            nivelCourse:{
+            nivelCourse: {
                 required: true
             },
-            hours:{
+            hours: {
                 required: true
             },
-            dateCourse:{
+            dateCourse: {
                 required: true
             }
         },
@@ -66,29 +66,29 @@ jQuery(document).ready(function($) {
             titleCourse: {
                 required: 'Ingresa el titulo del curso.'
             },
-            identify:{
+            identify: {
                 required: 'Ingresa el documento de identificación.'
             },
-            nivelCourse:{
+            nivelCourse: {
                 required: 'Ingresa el nivel del curso'
             },
-            hours:{
+            hours: {
                 required: 'Ingresa las horas'
             },
-            dateCourse:{
+            dateCourse: {
                 required: 'Ingresa la fecha inicio del curso.'
             }
         },
 
-        highlight: function(element, errorClass, validClass) {
+        highlight: function (element, errorClass, validClass) {
             $(element).closest('.field').addClass(errorClass).removeClass(validClass);
         }, // end highlight
 
-        unhighlight: function(element, errorClass, validClass) {
+        unhighlight: function (element, errorClass, validClass) {
             $(element).closest('.field').removeClass(errorClass).addClass(validClass);
         }, // end unhighlight
 
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             if (element.is(":radio") || element.is(":checkbox")) {
                 element.closest('.option-group').after(error);
             } else {
@@ -98,7 +98,7 @@ jQuery(document).ready(function($) {
         submitHandler: function (form) {
             let formData = $(form).serialize();
             const action = $('#submitButton').data('action') || 'create';
-            if(action === "create"){
+            if (action === "create") {
                 $.ajax({
                     url: ajaxurl,
                     type: 'POST',
@@ -145,7 +145,7 @@ jQuery(document).ready(function($) {
                         console.error('Error al cargar el formulario:', error);
                     }
                 });
-            }else{
+            } else {
                 const formId = $("#createSolderForm").data('id') || 'default_id';
                 formData += `&id=${encodeURIComponent(formId)}`;
                 $.ajax({
@@ -169,7 +169,7 @@ jQuery(document).ready(function($) {
 
     })
 
-    $("#createCertificate").click(()=> {
+    $("#createCertificate").click(() => {
         $('#submitButton')
             .text('Crear Certificado')
             .addClass('btn-create')
@@ -179,7 +179,78 @@ jQuery(document).ready(function($) {
         $('#popup-modal-create').show();
     });
 
-    $("#closeCreateCertificate").click(()=>{
+    $(document).on("click", "#uploadCertificates", function () {
+
+        $("#modal-upload-excel").show();
+
+        $('input[type=file]').change(function () {
+            $smartFileVal = $(this);
+            $smartFileVal.next('.gui-input').val($smartFileVal.val());
+            let file = event.target.files[0];
+            if (!file) {
+                console.error("No se ha seleccionado un archivo.");
+                return;
+            }
+            let reader = new FileReader();
+
+            reader.onload = function (e) {
+                let registros = [];
+
+                let data = new Uint8Array(e.target.result); // Convierte a formato binario
+                let workbook = XLSX.read(data, { type: 'array' });
+
+                let sheetName = workbook.SheetNames[0];
+                let sheet = workbook.Sheets[sheetName];
+
+                let jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+                for(let i = 0; i < jsonData.length;  i ++ ){
+                    if(jsonData[i].length < 6 && i === 0) {
+                            console.error("La cantidad de columnas no coinciden con la posicion de inserción");
+                            return;
+                    }
+                    if(i >= 1){
+                        registros.push({
+                            name: jsonData[i][0],
+                            document: jsonData[i][1],
+                            course: jsonData[i][2],
+                            level_course: jsonData[i][3],
+                            hours: jsonData[i][4],
+                            date: jsonData[i][5]
+                        })
+                    }
+                }
+
+                $.ajax({
+                    url: ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'insertar_data_excel_solder',
+                        registers: JSON.stringify(registros)
+                    },
+                    success: function (response) {
+                        console.log("Result: ", response);
+                        $smartFileVal.next('.gui-input').val("");
+                        $("#modal-upload-excel").hide();
+                        window.location.reload();
+                    },
+                    error: function (error) {
+                        console.error("Error al insertar:", error);
+                    }
+                });
+            };
+
+            reader.readAsArrayBuffer(file);
+        });
+
+    });
+
+    $("#closeUploadExcelCert").click(() => {
+        $("#modal-upload-excel").hide();
+
+    })
+
+    $("#closeCreateCertificate").click(() => {
         $('#popup-modal-create').hide();
     });
 
@@ -187,9 +258,9 @@ jQuery(document).ready(function($) {
         $('#modal-preview-certificate').hide()
     });
 
-    let tableSolder =  $("#tableSoldador");
+    let tableSolder = $("#tableSoldador");
 
-    tableSolder.on("click", ".editCert", function() {
+    tableSolder.on("click", ".editCert", function () {
         let data = $.parseJSON($(this).attr('data-button'));
 
         const fechaRegistro = data.fecha_registro || '';
@@ -215,7 +286,7 @@ jQuery(document).ready(function($) {
         $('#popup-modal-create').show();
     });
 
-    tableSolder.on("click", ".previewCert", function() {
+    tableSolder.on("click", ".previewCert", function () {
         let data = $.parseJSON($(this).attr('data-button'));
         $('#modal-preview-certificate').show()
         $("#certificate .recipient").html(data.name_study);
@@ -232,9 +303,10 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $(window).on('load', function() {
-        $('#loader').fadeOut(2000, function() {
+    $(window).on('load', function () {
+        $('#loader').fadeOut(2000, function () {
             $(this).remove();
         });
     });
+
 });

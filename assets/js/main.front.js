@@ -5,7 +5,6 @@ jQuery(document).ready(function($) {
     $("#container-result").hide();
     $('#result-table-certificado').on("click", ".btn-certificate", function() {
         let data = $.parseJSON($(this).attr('data-button'));
-        console.log(data);
         $('#modal-preview-certificate').show();
         $("#certificate .recipient").html(data.name_study);
         $("#certificate .course").html(data.course);
@@ -31,8 +30,8 @@ jQuery(document).ready(function($) {
                 let enable_cert = result.enable_cert;
                 let content_html;
 
-                $("#container-result .title").html(result.data[0]?.name_study);
-                $("#container-result .sub-title").html("Cc. " + result.data[0]?.document);
+                $("#container-result .title").html(result.data[0]?.name_study || "");
+                $("#container-result .sub-title").html("Cc. " + result.data[0]?.document || "");
 
                 if(result.data.length > 0){
                     resultGeneral.push(result.data);
@@ -68,8 +67,14 @@ jQuery(document).ready(function($) {
 
     $('#downloader').click(function (){
 
-        let workbook = XLSX.utils.book_new();
+
+        $("#container-result").hide();
+        $("#resultCertSolder").html("");
+        $("#mySearchSolder").trigger("reset");
+
+        /*let workbook = XLSX.utils.book_new();
         let data = [];
+
         resultGeneral[0].map(item => {
             data.push([item.id, item.name_study, item.document, item.course, item.nivel, item.fecha_registro]);
         });
@@ -81,7 +86,7 @@ jQuery(document).ready(function($) {
         workbook.Workbook.Views = workbook.Workbook.Views || [];
         workbook.Workbook.Views.push({ RTL: false, ReadOnlyRecommended: true });
 
-        XLSX.writeFile(workbook, "certificado.xlsx");
+        XLSX.writeFile(workbook, "certificado.xlsx");*/
 
     });
 

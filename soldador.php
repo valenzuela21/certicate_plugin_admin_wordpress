@@ -38,7 +38,58 @@ class SoldadorAdmin {
         add_action('wp_ajax_nopriv_update_solder_form', array($this, 'update_solder_form'));
         add_action('wp_ajax_consult_solder_form', array($this, 'consult_solder_form'));
         add_action('wp_ajax_nopriv_consult_solder_form', array($this, 'consult_solder_form'));
+        add_action('wp_ajax_insertar_data_excel_solder', array($this,'insertar_data_excel_solder'));
+        add_action('wp_ajax_nopriv_insertar_data_excel_solder', array($this, 'insertar_data_excel_solder'));
         register_activation_hook(__FILE__, array($this, 'create_table_soldador_plugin'));
+    }
+
+    public function insertar_data_excel_solder(){
+
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'certificate_solder';
+
+
+        if (!isset($_POST['registers'])) {
+            wp_send_json_error("No hay datos recibidos.");
+        }
+
+        $wpdb->query("TRUNCATE TABLE $table_name");
+
+        $registers = json_decode(stripslashes($_POST['registers']), true);
+        if (!empty($registers) && is_array($registers)) {
+            foreach ($registers as $form_data) {
+
+                if (!isset($form_data['name'], $form_data['document'], $form_data['course'], $form_data['level_course'], $form_data['hours'])) {
+                    continue;
+                }
+
+                $result = $wpdb->insert(
+                    $table_name,
+                    array(
+                        'name_study' => sanitize_text_field($form_data['name']),
+                        'document' => sanitize_text_field($form_data['document']),
+                        'course' => sanitize_text_field($form_data['course']),
+                        'nivel' => sanitize_text_field($form_data['level_course']),
+                        'hours' => sanitize_text_field($form_data['hours']),
+                        'fecha_registro' => sanitize_text_field(current_time('mysql'))
+                    ),
+                    array(
+                        '%s',
+                        '%s',
+                        '%s',
+                        '%s',
+                        '%s',
+                        '%s'
+                    )
+                );
+            }
+
+            if($result){
+                wp_send_json_success("Datos insertados correctamente.");
+            }else{
+                wp_send_json_error("Los datos no se insertaron correctamente.");
+            }
+        }
     }
 
     public function consult_solder_form(){
@@ -260,14 +311,6 @@ class SoldadorAdmin {
         wp_localize_script('front_main_soldador', 'ajax_object', [
             'ajaxurl' => admin_url('admin-ajax.php'),
         ]);
-
-        wp_enqueue_style(
-            'admin_css_form_solder',
-            plugins_url('./assets/css/smart-forms.css', __FILE__),
-            array(),
-            '1.0.1'
-        );
-
     }
 
     public function admin_css_js_soldador($hook){
@@ -321,7 +364,6 @@ class SoldadorAdmin {
                 );
 
 
-
                 wp_enqueue_script(
                     'admin_datatables_min_solder',
                     plugins_url('./assets/js/dataTables.js', __FILE__),
@@ -362,6 +404,15 @@ class SoldadorAdmin {
                     true
                 );
 
+                wp_enqueue_script(
+                    'admin_xlsx_full_min',
+                    plugins_url('./assets/js/xlsx.full.min.js', __FILE__),
+                    array('jquery'),
+                    '1.0',
+                    true
+                );
+
+
                 wp_enqueue_style(
                     'admin_css_data_table_solder',
                     plugins_url('./assets/css/dataTable.min.css', __FILE__),
@@ -376,6 +427,12 @@ class SoldadorAdmin {
                     '1.0.1'
                 );
 
+                wp_enqueue_style(
+                    'admin_smart_addons_forms',
+                    plugins_url('./assets/css/smart-addons.css', __FILE__),
+                    array(),
+                    '1.0.1'
+                );
 
                 wp_enqueue_style(
                     'admin_css_form_solder_ie8',
@@ -387,6 +444,13 @@ class SoldadorAdmin {
                 wp_enqueue_style(
                     'admin_css_style_solder',
                     plugins_url('./assets/css/style.css', __FILE__),
+                    array(),
+                    '1.0.1'
+                );
+
+                wp_enqueue_style(
+                    'admin_css_form_solder',
+                    plugins_url('./assets/css/smart-forms.css', __FILE__),
                     array(),
                     '1.0.1'
                 );

@@ -15,12 +15,12 @@ class SolderCertificate
         } else {
             $option = $option_value;
         }
-        $title_certificate = $option_value['title-certificate'];
-        $description_certificate = $option_value['description-certicate'];
-        $sub_description_certificate = $option_value['sub-description-certicate'];
-        $logo_business = $option_value['logo-business'];
-        $signal_one = $option_value['signal-one'];
-        $signal_two = $option_value['signal-two'];
+        $title_certificate = $option_value['title-certificate'] ?? "";
+        $description_certificate = $option_value['description-certicate'] ?? "";
+        $sub_description_certificate = $option_value['sub-description-certicate'] ?? "";
+        $logo_business = $option_value['logo-business'] ?? "";
+        $signal_one = $option_value['signal-one'] ?? "";
+        $signal_two = $option_value['signal-two'] ?? "";
 
         return '<style>
    

@@ -8,7 +8,7 @@ class SoldadorContentAdmin
 {
     public static function extendsContent(): string
     {
-        return LoaderCertificate::init() . ModalAdminContent::previewCertificate() . ModalAdminContent::content();
+        return LoaderCertificate::init() . ModalAdminContent::previewCertificate() . ModalAdminContent::content() . ModalAdminContent::uploadModalExcel();
     }
 
     public static function content(): string
@@ -29,6 +29,9 @@ class SoldadorContentAdmin
            Shorcode: <code>[solder_consult]</code>
         </div>
         <div class="flex items-center space-x-6 rtl:space-x-reverse">
+            <button type="button" id="uploadCertificates" class="bg-green-700 hover:bg-gray-400 text-gray-800 font-bold py-3 px-4 rounded inline-flex items-center cursor-pointer">
+                <svg class="fill-current w-4 h-4 cursor-pointer text-white cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
+            </button>
             <button id="createCertificate" type="button" class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 uppercase cursor-pointer">' . __('Crear Certificado', 'soldador-admin') . '</button>
         </div>
     </div>
@@ -88,6 +91,7 @@ class SoldadorContentAdmin
         }
         $content_html .= '</tbody>
     </table>
+    
 </div>
 </div>';
         return $content_html;
