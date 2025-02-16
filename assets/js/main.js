@@ -202,7 +202,8 @@ jQuery(document).ready(function ($) {
                 let sheetName = workbook.SheetNames[0];
                 let sheet = workbook.Sheets[sheetName];
 
-                let jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+                let jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: false });
+
 
                 for(let i = 0; i < jsonData.length;  i ++ ){
                     if(jsonData[i].length < 6 && i === 0) {

@@ -17,7 +17,7 @@ class CreateTable {
             course varchar(100) NOT NULL,
             nivel varchar(100) NOT NULL,
             hours varchar(100) NOT NULL,
-            fecha_registro datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            fecha_registro varchar(160) DEFAULT CURRENT_TIMESTAMP NOT NULL,
             inserted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             PRIMARY KEY (id)

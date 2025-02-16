@@ -40,7 +40,18 @@ class SoldadorAdmin {
         add_action('wp_ajax_nopriv_consult_solder_form', array($this, 'consult_solder_form'));
         add_action('wp_ajax_insertar_data_excel_solder', array($this,'insertar_data_excel_solder'));
         add_action('wp_ajax_nopriv_insertar_data_excel_solder', array($this, 'insertar_data_excel_solder'));
+        register_uninstall_hook(__FILE__, array($this, 'soldador_plugin_uninstall'));
+        register_deactivation_hook(__FILE__, array($this, 'soldador_plugin_uninstall'));
         register_activation_hook(__FILE__, array($this, 'create_table_soldador_plugin'));
+    }
+
+    function soldador_plugin_uninstall() {
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . 'certificate_solder';
+
+        // Elimina la tabla de la base de datos
+        $wpdb->query("DROP TABLE IF EXISTS $table_name");
     }
 
     public function insertar_data_excel_solder(){
@@ -59,7 +70,11 @@ class SoldadorAdmin {
         if (!empty($registers) && is_array($registers)) {
             foreach ($registers as $form_data) {
 
-                if (!isset($form_data['name'], $form_data['document'], $form_data['course'], $form_data['level_course'], $form_data['hours'])) {
+                if (
+                    !isset($form_data['name'], $form_data['document'], $form_data['course'],
+                        $form_data['level_course'], $form_data['hours'], $form_data['date']) ||
+                    in_array('N/A', $form_data, true) // Verifica si algún campo tiene "N/A"
+                )  {
                     continue;
                 }
 
@@ -71,7 +86,7 @@ class SoldadorAdmin {
                         'course' => sanitize_text_field($form_data['course']),
                         'nivel' => sanitize_text_field($form_data['level_course']),
                         'hours' => sanitize_text_field($form_data['hours']),
-                        'fecha_registro' => sanitize_text_field(current_time('mysql'))
+                        'fecha_registro' => sanitize_text_field($form_data['date']),
                     ),
                     array(
                         '%s',
